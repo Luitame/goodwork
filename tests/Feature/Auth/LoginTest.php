@@ -35,19 +35,19 @@ class LoginTest extends TestCase
     {
         $user = factory(User::class)->create([
             'email' => 'luitame@gmail.com',
-            'password' => 'hacktoberfest',
+            'password' => bcrypt('hacktoberfest')
         ]);
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => $user->password,
+            'password' => 'hacktoberfest'
         ]);
 
         $response->assertRedirect('/');
         $this->assertAuthenticatedAs($user);
     }
 
-    /** @text */
+    /** @test */
     public function test_user_cannot_login_with_incorrect_password()
     {
         $user = factory(User::class)->create([
